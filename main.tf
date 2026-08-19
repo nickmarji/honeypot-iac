@@ -1,19 +1,19 @@
 resource "aws_vpc" "honeypot" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr
 
   tags = {
-    Name = "honeypot-vpc"
+    Name = "${var.project_name}-vpc"
   }
 }
 
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.honeypot.id
-  cidr_block              = "10.0.0.0/20"
-  availability_zone       = "us-east-2a"
+  cidr_block              = var.subnet_cidr
+  availability_zone       = var.availability_zone
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "honeypot-subnet-public1-us-east-2a"
+    Name = "${var.project_name}-subnet-public1-${var.availability_zone}"
   }
 }
 
@@ -21,7 +21,7 @@ resource "aws_internet_gateway" "honeypot" {
   vpc_id = aws_vpc.honeypot.id
 
   tags = {
-    Name = "honeypot-igw"
+    Name = "${var.project_name}-igw"
   }
 }
 
@@ -34,7 +34,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "honeypot-rtb-public"
+    Name = "${var.project_name}-rtb-public"
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_security_group" "honeypot" {
-  name        = "launch-wizard-1"
+  name        = var.security_group_name
   description = "launch-wizard-1 created 2026-08-10T20:04:55.052Z"
   vpc_id      = aws_vpc.honeypot.id
 
@@ -57,11 +57,11 @@ resource "aws_security_group" "honeypot" {
   }
 
   ingress {
-    description = "NM admin access"
+    description = "admin access"
     from_port   = 2222
     to_port     = 2222
     protocol    = "tcp"
-    cidr_blocks = ["67.81.92.107/32"]
+    cidr_blocks = [var.admin_ip]
   }
 
   egress {
@@ -73,13 +73,13 @@ resource "aws_security_group" "honeypot" {
 }
 
 resource "aws_instance" "honeypot" {
-  ami                    = "ami-048f644e868baa0e8"
-  instance_type          = "t3.micro"
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
   subnet_id              = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.honeypot.id]
-  key_name               = "honeypot-key"
+  key_name               = var.key_pair_name
 
   tags = {
-    Name = "honeypot-server"
+    Name = "${var.project_name}-server"
   }
 }

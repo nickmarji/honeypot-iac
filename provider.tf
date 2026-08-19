@@ -8,6 +8,6 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-east-2"
-  profile = "honeypot"
+  region  = var.aws_region
+  profile = var.aws_profile
 }

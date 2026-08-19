@@ -1,0 +1,9 @@
+aws_region  = "us-east-2"
+aws_profile = "yourprofile"
+
+ami_id             = "ami-XXXXXXXXXXXXXXXXX"
+key_pair_name      = "your-key-pair-name"
+admin_ip           = "YOUR.IP.ADDRESS.HERE/32"
+security_group_name = "honeypot-sg"
+
+project_name = "honeypot"
