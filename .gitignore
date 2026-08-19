@@ -1,0 +1,13 @@
+# Terraform state - contains resource details, not meant for public repos
+*.tfstate
+*.tfstate.*
+terraform.tfstate.backup
+
+# Local Terraform working files
+.terraform/
+.terraform.lock.hcl.bak
+
+# Any local override or secret files
+*.tfvars
+*.auto.tfvars
+credentials.json
