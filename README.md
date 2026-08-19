@@ -4,7 +4,7 @@ Terraform configuration for an AWS SSH honeypot (Cowrie), written retroactively 
 
 ## Why retroactive?
 
-The honeypot was originally built by hand in the AWS console to learn AWS fundamentals from zero. Once it was live and collecting real attacker data, I went back and wrote Terraform to describe the exact running infrastructure, then used terraform import to bring each real resource under Terraform's management without disrupting the live collection. terraform plan was then used to verify the code was an accurate description of production, not a guess.
+The honeypot was originally built by hand in the AWS console to learn AWS fundamentals from zero. Once it was live and collecting real attacker data, I went back and wrote Terraform to describe the exact running infrastructure, then used terraform import to bring each real resource under Terraform's management without disrupting the live collection. terraform plan was then used to verify the code was an accurate description of production.
 
 This proves the code actually matches reality, rather than just describing what I intended to build.
 
